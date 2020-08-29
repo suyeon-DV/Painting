@@ -1,5 +1,6 @@
 const canvas = document.querySelector("#jsCanvas");
 const ctx = canvas.getContext("2d");
+const colors = document.querySelectorAll(".jsColor");
 
 // **Line Drawing**
 
@@ -45,9 +46,10 @@ function onMouseMove(event) {
     }
 }
 
-// 마우스를 클릭했을 때
-function onMouseDown(event) {
-    painting = true;
+// 색 바꾸는 함수
+function handleColorClick(event) {
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
 }
 
 if (canvas) {
@@ -58,3 +60,11 @@ if (canvas) {
 }
 
 //**Color selector**
+console.log(Array.from(colors));
+//querySelectorAll(querySelector)를 사용하면 nodelist가 반환된다.
+//getelementbyclassname: HTML??? object 반환됨
+// 둘 다 object이기 때문에 Array.from()을 사용해서 Array로 변환시켜주면 됨
+
+Array.from(colors).forEach((color) =>
+    color.addEventListener("click", handleColorClick)
+);
