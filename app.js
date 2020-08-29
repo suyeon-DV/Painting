@@ -2,6 +2,7 @@ const canvas = document.querySelector("#jsCanvas");
 const ctx = canvas.getContext("2d");
 const colors = document.querySelectorAll(".jsColor");
 const range = document.querySelector("#jsRange");
+const mode = document.querySelector("#jsMode");
 
 // **Line Drawing**
 
@@ -14,6 +15,7 @@ ctx.strokeStyle = "#2c2c2c";
 ctx.lineWidth = 2.5;
 
 let painting = false; // 그리지 않는 상태
+let filling = false; // fill off 상태
 
 /* note
 console창에서 event를 열어서보면 clientx, clienty가 있다. 
@@ -59,6 +61,17 @@ function handleRangeChange(event) {
     ctx.lineWidth = size;
 }
 
+// Fill 버튼: Mode 변경함수(paint or not paint)
+function handleModeClick() {
+    if (filling === true) {
+        filling = false;
+        mode.innerText = "Fill";
+    } else {
+        filling = true;
+        mode.innerText = "Paint";
+    }
+}
+
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
@@ -79,4 +92,9 @@ Array.from(colors).forEach((color) =>
 // **Range controler**
 if (range) {
     range.addEventListener("input", handleRangeChange);
+}
+
+// **Mode 버튼(Fill btn)**
+if (mode) {
+    mode.addEventListener("click", handleModeClick);
 }
