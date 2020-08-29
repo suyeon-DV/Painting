@@ -1,6 +1,7 @@
 const canvas = document.querySelector("#jsCanvas");
 const ctx = canvas.getContext("2d");
 const colors = document.querySelectorAll(".jsColor");
+const range = document.querySelector("#jsRange");
 
 // **Line Drawing**
 
@@ -52,6 +53,12 @@ function handleColorClick(event) {
     ctx.strokeStyle = color;
 }
 
+// range 조절하는 함수
+function handleRangeChange(event) {
+    const size = event.target.value;
+    ctx.lineWidth = size;
+}
+
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
@@ -68,3 +75,8 @@ console.log(Array.from(colors));
 Array.from(colors).forEach((color) =>
     color.addEventListener("click", handleColorClick)
 );
+
+// **Range controler**
+if (range) {
+    range.addEventListener("input", handleRangeChange);
+}
