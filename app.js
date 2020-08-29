@@ -3,6 +3,7 @@ const ctx = canvas.getContext("2d");
 const colors = document.querySelectorAll(".jsColor");
 const range = document.querySelector("#jsRange");
 const mode = document.querySelector("#jsMode");
+const saveBtn = document.querySelector("#jsSave");
 
 //strokeStyle과 fillStyle이 같은 defalt 값을 가져서 변수 만듬
 const INITIAL_COLOR = "#2c2c2c";
@@ -88,12 +89,27 @@ function handleCanvasClick() {
     }
 }
 
+// context menu(canvas에서 오른쪽 클릭하면 나오는 메뉴) 나오지 않게하는 함수
+function handleCM(event) {
+    event.preventDefault();
+}
+
+// Save 버튼 눌렀을 때 저장하는 함수
+function handleSaveClick() {
+    const image = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "PainJS[❤]";
+    link.click(); // a tag 눌렀을 때 처럼!!
+}
+
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
     canvas.addEventListener("click", handleCanvasClick);
+    canvas.addEventListener("contextmenu", handleCM);
 }
 
 //**Color selector**
@@ -111,7 +127,12 @@ if (range) {
     range.addEventListener("input", handleRangeChange);
 }
 
-// **Mode 버튼(Fill btn)**
+// **Mode 버튼(Fill btn) click 시 paint로 바뀜**
 if (mode) {
     mode.addEventListener("click", handleModeClick);
+}
+
+//**Save 버튼**
+if (saveBtn) {
+    saveBtn.addEventListener("click", handleSaveClick);
 }
