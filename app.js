@@ -4,14 +4,22 @@ const colors = document.querySelectorAll(".jsColor");
 const range = document.querySelector("#jsRange");
 const mode = document.querySelector("#jsMode");
 
+//strokeStyle과 fillStyle이 같은 defalt 값을 가져서 변수 만듬
+const INITIAL_COLOR = "#2c2c2c";
+const CANVAS_SIZE = 500;
+
 // **Line Drawing**
 
 //CSS에서 설정한 것은 canvas의 사이즈이다. 박스의 크기를 설정한 것.
 //아래에서 설정한 것은 박스 내의 실제 pixel 사이즈를 설정한 것이다. 실제 공간의 사이즈를 설정한 것. 때문에 500=>300으로 바꾸면 canvas의 크기는 500px이지만 내부는 300px로 쪼개지기 때문에 300x300만큼의 공간처럼 쓴다. 또 포인터랑 그리는 위치랑 달라짐.
-canvas.width = 500;
-canvas.height = 500;
+canvas.width = CANVAS_SIZE;
+canvas.height = CANVAS_SIZE;
 
-ctx.strokeStyle = "#2c2c2c";
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+//배경색 default값 지정.위 두개를 지정해놓지 않을 시 이미지 저장을 하게되면 background 색이 투명이 되어 버린다.
+ctx.strokeStyle = INITIAL_COLOR;
+ctx.fillStyle = INITIAL_COLOR;
 ctx.lineWidth = 2.5;
 
 let painting = false; // 그리지 않는 상태
@@ -53,6 +61,7 @@ function onMouseMove(event) {
 function handleColorClick(event) {
     const color = event.target.style.backgroundColor;
     ctx.strokeStyle = color;
+    ctx.fillStyle = color; //Fill mode일 때 stroke 색상과 같은 색상으로 변하도록 지정
 }
 
 // range 조절하는 함수
@@ -72,11 +81,19 @@ function handleModeClick() {
     }
 }
 
+// Canvas 클릭하면 배경으로 색이 채워지는 함수
+function handleCanvasClick() {
+    if (filling) {
+        ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+    }
+}
+
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
+    canvas.addEventListener("click", handleCanvasClick);
 }
 
 //**Color selector**
