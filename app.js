@@ -1,6 +1,8 @@
 const canvas = document.querySelector("#jsCanvas");
 const ctx = canvas.getContext("2d");
 
+// **Line Drawing**
+
 //CSS에서 설정한 것은 canvas의 사이즈이다. 박스의 크기를 설정한 것.
 //아래에서 설정한 것은 박스 내의 실제 pixel 사이즈를 설정한 것이다. 실제 공간의 사이즈를 설정한 것. 때문에 500=>300으로 바꾸면 canvas의 크기는 500px이지만 내부는 300px로 쪼개지기 때문에 300x300만큼의 공간처럼 쓴다. 또 포인터랑 그리는 위치랑 달라짐.
 canvas.width = 500;
@@ -55,4 +57,4 @@ if (canvas) {
     canvas.addEventListener("mouseleave", stopPainting);
 }
 
-
+//**Color selector**
